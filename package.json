@@ -1,0 +1,15 @@
+
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "Projeto de uma to do list para o cliente da Focus Consultoria",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "Grupo 3 Processo Seletivo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
