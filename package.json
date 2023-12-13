@@ -5,11 +5,14 @@
   "description": "Projeto de uma to do list para o cliente da Focus Consultoria",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "dev": "nodemon index.js"
   },
   "author": "Grupo 3 Processo Seletivo",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2"
   }
 }
