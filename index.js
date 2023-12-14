@@ -2,6 +2,7 @@
 const express = require("express"); //buscando dentro de do node_modules o express
 const routes = require('./routes/routes');
 const app = express(); // constante que vai receber express sendo executado (o app vai fazer tudo a partir de agora )
+const connectToDb = require('./database/db');
 
 // Uso de Middleware _____________________________________________________________________________________________
 
@@ -10,8 +11,11 @@ const app = express(); // constante que vai receber express sendo executado (o a
 //__dirname é o diretório atual.
 app.use(express.static(__dirname + '/public'));
 app.use(routes); //utiliza as rotas.
+app.use(express.urlencoded())
 app.set('view engine', 'ejs'); //atribuição do tipo de arquivo a ser buscado (.ejs)
 
+//Conexão com Banco de Dados _____________________________________________________________________________________
+connectToDb();
 
 // Escutando Porta _______________________________________________________________________________________________
 const port = 3000;

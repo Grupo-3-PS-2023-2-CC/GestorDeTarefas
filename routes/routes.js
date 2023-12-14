@@ -13,5 +13,11 @@ const taskController = require('../controller/TaskController')
 routes.get('/', taskController.getAll);
 // Sobre função get: possui dois parametros ( nome da rota(onde vai acessar) , função de callback chamada pela get)
 
+//Criação de Tarefas
+routes.post('/criar', taskController.adicionarTarefa);
+//no index.ejs, pode ser ativado por um "submit" num <form action="[caminho]"" method="post"></form>
+//<!-- Agora que as tarefas são renderizadas (no controlador), pode-se usá-las no .ejs, em <% ... %> -->
+//<!-- Para mostrar conteúdo, usa-se <%= [conteúdo] %> -->
+
 // Exportação _____________________________________________________________
 module.exports = routes;
