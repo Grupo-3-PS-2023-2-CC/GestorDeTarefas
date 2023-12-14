@@ -24,8 +24,10 @@ const tarefa = new mongoose.Schema
         //Última Modificação
         ultimaModificao: {type: Date, required: false, default: Date.now()},
         //Prazo
-        prazo: {type: Date, required: true, default: Date.now()}
+                                            // Acho que o prazo não necessita de um default, pois o usuário terá que inserir uma data de prazo.
+        prazo: {type: Date, required: true, default: Date.now()},
         //Estado (a fazer, fazendo ou finalizado)
+        estado: {type: String, required: true} // Adicionado
     }
 )
 
