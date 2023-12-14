@@ -13,7 +13,7 @@ const getAll = async (req, res) =>
 {
     try
     {
-        tarefas = await tarefa.find();
+        const tarefas = await tarefa.find();
        return res.render("index", {tarefas}); //renderiza o index.ejs, buscando-o em "/views"
        //o segundo parâmetro inclui o tarefa.find(), que busca na coleção o que corresponde aos critérios dos parâmetros (nesse caso, sem filtros).
     }
