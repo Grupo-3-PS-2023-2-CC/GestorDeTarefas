@@ -94,13 +94,29 @@ form {
     flex-direction: column;
     border-radius: 3px;
     background-color: #8B5FA4;
-    width: 15vw;
+    width: 24vw; /* Antes era 15vw */
     min-height: 15vh;
 }
 
 .tituloAtividade
 {
     font-size: 1.2rem;
+    text-align: center;
     text-decoration: underline;
     background-color: rgba(255, 255, 255, 0.336);
+}
+
+.atributos-atividade-container { /* Novo */
+    margin: 1rem;
+}
+
+.autor-prioridade { /* Novo */
+    display: flex;
+    justify-content: space-between;
+    margin: .5rem 0;
+}
+
+.data-container { /* Novo */
+    display: flex;
+    justify-content: space-between;
 }
