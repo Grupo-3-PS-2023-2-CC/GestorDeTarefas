@@ -17,6 +17,8 @@ const tarefa = new mongoose.Schema
         nome: {type: String, required: true},
         //Descrição
         descricao: {type: String, required: true},
+        // Prioridade
+        prioridade: {type: String, required: true},
         //Autor
         autor: {type: String, required: true},
         //Data de Criação

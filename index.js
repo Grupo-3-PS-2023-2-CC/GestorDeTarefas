@@ -19,6 +19,6 @@ connectToDb();
 
 // Escutando Porta _______________________________________________________________________________________________
 const port = 3000;
-app.listen(port, ()=>{console.log(`<!> Rodando em porta ${port} (https://localhost:${port})`);}); // ele vai rodar num servidor local na maquina, por enquanto
+app.listen(port, ()=>{console.log(`<!> Rodando em porta ${port} (http://localhost:${port})`);}); // ele vai rodar num servidor local na maquina, por enquanto
 
 // MANEIRA DE ACESSAR: no terminal, digitar "npm start", e depois ir no navegador e digitar "localhost:3000/home"
