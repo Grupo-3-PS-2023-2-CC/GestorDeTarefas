@@ -14,7 +14,7 @@ const getAll = async (req, res) =>
     try
     {
         const tarefas = await tarefa.find();
-       return res.render("index", {tarefas}); //renderiza o index.ejs, buscando-o em "/views"
+       res.render("index", {tarefas}); //renderiza o index.ejs, buscando-o em "/views"
        //o segundo parâmetro inclui o tarefa.find(), que busca na coleção o que corresponde aos critérios dos parâmetros (nesse caso, sem filtros).
     }
     catch(error)
@@ -28,11 +28,21 @@ const getAll = async (req, res) =>
 const adicionarTarefa = async (req, res)=>
 {
     const body = req.body;
-    if(!body.hasOwnProperty('descricao')) return res.redirect('/'); //Se não houver corpo, redirecionar para página principal
+    if(!body) return res.redirect('/'); //Se não houver corpo, redirecionar para página principal
     try
     {
         //Criando tarefa no banco de dados, a partir da schema de tarefa.
-        await tarefa.create()
+        await tarefa.create(
+            {
+                nome: body.nome,
+                autor: body.autor,
+                descricao: body.descricao,
+                estado: body.estado,
+                prioridade: body.prioridade,
+                dataCriacao: Date.now(),
+                ultimaModificacao: Date.now(),
+                prazo: body.prazo
+            })
         
         //Redirecionando para página principal
         res.redirect('/');

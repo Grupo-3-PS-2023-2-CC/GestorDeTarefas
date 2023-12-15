@@ -28,8 +28,20 @@ nav
 
 main
 {
-    height: 95vh;
+    height: 90vh;
     width: 100%;
+}
+
+::-webkit-scrollbar
+{
+    background-color: #5f453bb7;
+    width: 0.5vh;
+    height: 0.5vh;
+}
+::-webkit-scrollbar-thumb
+{
+    background-image: linear-gradient(90deg, rgb(243, 223, 159), rgb(184, 159, 77));
+    border-radius: 8px;
 }
 
 form {
@@ -47,12 +59,13 @@ form {
 {
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.144);
     border-radius: 5px;
-    height: 90vh;
-    width: 33%;
-    margin: 2vh 2vw 2vh 2vw;
+    height: 85vh;
+    overflow-x: auto;
+    width: 33vw;
+    margin: 2vh 2vw 0 2vw;
 }
 
-#aFazer
+#afazer
 {
     background-color: rgb(0, 50, 185);
 }
@@ -74,18 +87,21 @@ form {
     margin-bottom: 2vh;
 }
 
-.nivel
+.prioridade
 {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     justify-content: space-around;
+    gap: 2vw;
+    padding: 0.5vh 0.5vw;
 }
 
 .atividades
 {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .atividade
@@ -94,8 +110,10 @@ form {
     flex-direction: column;
     border-radius: 3px;
     background-color: #8B5FA4;
+    /*a fazer: #dd4e34; fazendo: #dddf73; finalizado: #85ca85;*/
     width: 24vw; /* Antes era 15vw */
     min-height: 15vh;
+    margin: 2vh auto;
 }
 
 .tituloAtividade
@@ -119,4 +137,17 @@ form {
 .data-container { /* Novo */
     display: flex;
     justify-content: space-between;
+}
+
+.extra
+{
+    margin-top: 1.5vh;
+    visibility: hidden;
+    height: 0;
+    transition: height 1s;
+}
+.atividade:hover .extra
+{
+    visibility: visible;
+    height: auto;
 }

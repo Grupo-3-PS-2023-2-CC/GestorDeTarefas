@@ -24,7 +24,7 @@ const tarefa = new mongoose.Schema
         //Data de Criação
         dataCriacao: {type: Date, required: false, default: Date.now()},
         //Última Modificação
-        ultimaModificao: {type: Date, required: false, default: Date.now()},
+        ultimaModificacao: {type: Date, required: false, default: Date.now()},
         //Prazo
                                             // Acho que o prazo não necessita de um default, pois o usuário terá que inserir uma data de prazo.
         prazo: {type: Date, required: true, default: Date.now()},

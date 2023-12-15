@@ -11,12 +11,20 @@
         <nav><img src="" alt="Logo Focus"></nav>
     </header>
 
-    <form action="" method="post">
+    <!-- FORMULÁRIO ------------------------------------------------------------------------>
+    <form action="/criar" method="post">
         <label for="nome">Tarefa:</label>
         <input id="nome" name="nome" type="text">
 
         <label for="descricao">Descrição:</label>
         <input id="descricao" name="descricao" type="text">
+
+        <label for="estado">Seção:</label>
+        <select name="estado" id="estado">
+            <option value="A Fazer">A Fazer</option>
+            <option value="Fazendo">Fazendo</option>
+            <option value="Finalizado">Finalizado</option>
+        </select>
 
         <label for="prioridade">Prioridade:</label>
         <select name="prioridade" id="prioridade">
@@ -34,51 +42,84 @@
         <button type="submit">Adicionar tarefa</button>
     </form>
 
+    <!-- QUADRO ---------------------------------------------------------------------------->
     <main id="quadro">
-        <section class="coluna" id="aFazer">
-            <h1>A Fazer</h1>
-            <div class="atividades">
-                <div class="nivel nivel1" >
-                    <div class="atividade">
-                        <div class="tituloAtividade">Sem Nome</div>
-                        <div class="atributos-atividade-container">
-                            <p class="descricao">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, non nemo? Ipsam repudiandae laborum, dolorum eligendi quasi neque eaque eum ab.
-                            </p>
-                            <div class="autor-prioridade">
-                                <p class="autor">Autor</p>
-                                <p class="prioridade">Alta</p>
-                            </div>
-                            <div class="data-container">
-                                <p class="data-rotulo">Criada em:</p>
-                                <p class="data">dd/mm/aaaa</p>
-                            </div>
-                            <div class="data-container">
-                                <p class="data-rotulo">Modificada em:</p>
-                                <p class="data">dd/mm/aaaa</p>
-                            </div>
-                            <div class="data-container">
-                                <p class="data-rotulo">prazo:</p>
-                                <p class="data">dd/mm/aaaa</p>
+
+        <% let colunas = ['A Fazer', 'Fazendo', 'Finalizado']%>
+        <% let idsColunas = ['afazer', 'fazendo', 'finalizado']%>
+        <%colunas.forEach((coluna, i)=>{%>
+            <section class="coluna" id=<%=idsColunas[i]%>>
+                <h1><%=coluna%></h1>
+                <div class="atividades">
+                    <div class="prioridade alta"></div>
+                    <div class="prioridade media"></div>
+                    <div class="prioridade baixa"></div>
+                </div>
+            </section>
+        <%})%>
+
+    </main>
+
+    <!-- CARREGANDO DADOS ----------------------------------------------------------------->
+    <script src="/script.js"></script>
+    <script>
+        
+        let tarefas = '<%-JSON.stringify(tarefas)%>' //resgatando tarefas renderizadas.
+        tarefas = JSON.parse(tarefas);
+
+        tarefas.forEach(
+            (tarefa)=>
+            {
+                //console.log(`Lendo tarefa `, tarefa);
+                estadoFormatado = tarefa.estado.match(/\w+/gi).join('').toLowerCase();
+                let coluna = document.querySelector(`#${estadoFormatado}`);
+                let linha = coluna.querySelector(`.${tarefa.prioridade}`);
+                let cor;
+                switch(estadoFormatado)
+                {
+                    case "afazer":
+                        cor = '#dd4e34';
+                        break;
+                    case "fazendo":
+                        cor = '#dddf73';
+                        break;
+                    case "finalizado":
+                        cor = '#85ca85';
+                        break;
+                    default:
+                        cor = 'purple';
+                }
+                linha.innerHTML += 
+                `
+                <div class="atividade">
+                            <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
+                            <div class="atributos-atividade-container">
+                                <p class="descricao">
+                                    ${tarefa.descricao}
+                                </p>
+                                <div class="autor-prioridade">
+                                    <p class="autor">${tarefa.autor}</p>
+                                    <p class="prioridade">${tarefa.prioridade}</p>
+                                </div>
+                                <div class="data-container">
+                                    <p class="data-rotulo">prazo:</p>
+                                    <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
+                                </div>
+                                <div class="extra">
+                                    <div class="data-container">
+                                        <p class="data-rotulo">Criada em:</p>
+                                        <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
+                                    </div>
+                                    <div class="data-container">
+                                        <p class="data-rotulo">Modificada em:</p>
+                                        <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
+                                </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="coluna" id="fazendo">
-            <h1>Fazendo</h1>
-            <div class="atividades">
-
-            </div>
-        </section>
-        <section class="coluna" id="finalizado">
-            <h1>Finalizado</h1>
-            <div class="atividades">
-
-            </div>
-        </section>
-    </main>
-    <script src="/script.js"></script>
+                `;
+            }
+        )
+    </script>
 </body>
 </html>
