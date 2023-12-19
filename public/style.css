@@ -298,6 +298,19 @@ form {
         width: 100%;
     }
 
+    .coluna
+    {
+        width: 100%;
+        height: 40vh;
+        margin-top: 0.5vh;
+    }
+
+    .prioridade
+    {
+        min-height: 13.33vh;
+        border-bottom: dashed black thin;
+    }
+
     #quadro
     {
         display: flex;
@@ -335,11 +348,20 @@ form {
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 25vw;
-    margin-left: 75vw;
+    width: 100%;
     background-image: linear-gradient(180deg, rgb(41, 219, 226), rgba(0, 49, 185, 0.8));
     border-left: dashed thin black;
     z-index: 1;
     text-align: center;
+}
+@keyframes menuAnim {
+    0%
+    {
+        margin-left: 100vw;
+    }
+    100%
+    {
+        margin-left: 0vw;
+    }
 }
 }
