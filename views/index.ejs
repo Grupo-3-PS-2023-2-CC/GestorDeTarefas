@@ -73,6 +73,7 @@
 
     <!-- CARREGANDO DADOS ----------------------------------------------------------------->
     <script src="/script.js"></script>
+    <script src="/dragAndDrop.js"></script>
     <script>
         
         let tarefas = '<%-JSON.stringify(tarefas)%>' //resgatando tarefas renderizadas.
@@ -102,7 +103,7 @@
                 }
                 linha.innerHTML += 
                 `
-                <div class="atividade">
+                <div class="atividade" draggable="true">
                             <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
                             <div class="atributos-atividade-container">
                                 <p class="descricao">
@@ -115,7 +116,7 @@
                                 <div class="extra">
                                     <div class="autor-prioridade">
                                     <p class="autor">${tarefa.autor}</p>
-                                    <p class="prioridade">${tarefa.prioridade}</p>
+                                    <p class="nome-prioridade">${tarefa.prioridade}</p>
                                     </div>
                                     <div class="data-container">
                                         <p class="data-rotulo">Criada:</p>
