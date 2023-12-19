@@ -124,7 +124,7 @@ form {
     /*a fazer: #E53324; fazendo: #FBE23E; finalizado: #2F993D;*/
     min-width: 13vw;
     width: auto; /* Antes era 15vw */
-    
+    cursor: grab;
     
     /*overflow-y: auto;*/ /*AVALIAR*/
     height: auto;
