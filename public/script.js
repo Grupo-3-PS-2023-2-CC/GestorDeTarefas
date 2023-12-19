@@ -16,3 +16,5 @@ function ativarMenu()
         checkbox.checked = false;
     }
 }
+
+function algo(){}

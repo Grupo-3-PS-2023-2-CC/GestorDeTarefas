@@ -14,7 +14,7 @@ const tarefa = new mongoose.Schema
     //Objeto de configurações
     {
         //Nome (Título)
-        nome: {type: String, required: true},
+        nome: {type: String, required: true, unique: true},
         //Descrição
         descricao: {type: String, required: true},
         // Prioridade

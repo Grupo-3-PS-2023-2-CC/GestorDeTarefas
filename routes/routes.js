@@ -19,5 +19,8 @@ routes.post('/criar', taskController.adicionarTarefa);
 //<!-- Agora que as tarefas são renderizadas (no controlador), pode-se usá-las no .ejs, em <% ... %> -->
 //<!-- Para mostrar conteúdo, usa-se <%= [conteúdo] %> -->
 
+//Atualização de Posição
+routes.post('/modificar', taskController.modificar);
+
 // Exportação _____________________________________________________________
 module.exports = routes;

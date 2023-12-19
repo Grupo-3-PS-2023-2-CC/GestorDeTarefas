@@ -51,6 +51,16 @@ document.addEventListener('drop', function(event) {
         }
         arrastado.querySelector('.nome-prioridade').textContent = prioridade;
 
+        //Salvando em BD
+        let formulario = document.querySelector('#modificar');
+        formulario.querySelector('#nome').value = arrastado.querySelector('.tituloAtividade').textContent;
+        formulario.querySelector('#descricao').value = arrastado.querySelector('.descricao').textContent;
+        formulario.querySelector('#prioridade').value = prioridade;
+        formulario.querySelector('#estado').value = strColuna;
+        
+        console.log(arrastado.querySelector('.tituloAtividade').textContent, arrastado.querySelector('.descricao').textContent, prioridade, strColuna);
+        formulario.querySelector('button').click();
+
         //Coloque a tarefa
         event.target.classList.remove('drag-over');
         event.target.appendChild(draggedItem);

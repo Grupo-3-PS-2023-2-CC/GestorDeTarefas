@@ -42,8 +42,8 @@ const adicionarTarefa = async (req, res)=>
                 dataCriacao: Date.now(),
                 ultimaModificacao: Date.now(),
                 prazo: body.prazo
-            })
-        
+            });
+
         //Redirecionando para página principal
         res.redirect('/');
     }
@@ -55,10 +55,26 @@ const adicionarTarefa = async (req, res)=>
 
 };
 
+//Modificando Tarefa
+const modificar = async (req, res) =>
+{
+    body = req.body;
+    try{
+        //Modificando tarefa
+        await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {prioridade: body.prioridade, estado: body.estado, ultimaModificacao: Date.now()}});
+        res.redirect('/');
+    }
+    catch(error)
+    {
+        console.log(`<e> ${error}`);
+        res.status('500').send({error: error.message});
+    }
+}
 
 //Exportação ____________________________________________________
 module.exports = 
 {
     getAll,
-    adicionarTarefa
+    adicionarTarefa,
+    modificar
 }
