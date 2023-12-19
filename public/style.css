@@ -18,12 +18,18 @@ nav
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 5vh;
+    background-image: linear-gradient(90deg, rgb(61, 113, 138), rgb(233, 233, 233), rgb(61, 113, 138));
+    height: 10vh;
     width: 100%;
     color: white;
     /*font-family: 'aileron'; (implementar) */ 
     
     /*altura total: 9vh*/
+}
+nav img
+{
+    min-width: 60px;
+    min-height: 40px;
 }
 
 main
@@ -35,8 +41,10 @@ main
 ::-webkit-scrollbar
 {
     background-color: #5f453bb7;
-    width: 0.5vh;
-    height: 0.5vh;
+    /*width: 0.5vh;
+    height: 0.5vh;*/
+    width: 0;
+    height: 0;
 }
 ::-webkit-scrollbar-thumb
 {
@@ -62,7 +70,7 @@ form {
     height: 85vh;
     overflow-x: auto;
     width: 33vw;
-    margin: 2vh 2vw 0 2vw;
+    margin: 2vh 1vw 0 1vw;
 }
 
 #afazer
@@ -92,8 +100,10 @@ form {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    justify-content: space-around;
+    overflow-y: hidden;
+    justify-content: start;
     gap: 2vw;
+    height: 26vh;
     padding: 0.5vh 0.5vw;
 }
 
@@ -108,12 +118,20 @@ form {
 {
     display: flex;
     flex-direction: column;
-    border-radius: 3px;
-    background-color: #8B5FA4;
-    /*a fazer: #dd4e34; fazendo: #dddf73; finalizado: #85ca85;*/
-    width: 24vw; /* Antes era 15vw */
+    border-radius: 10px;
+    box-shadow: 1px 2px 2px 1px rgba(39, 47, 54, 0.315);
+    background-color: #c9c9c9;
+    /*a fazer: #E53324; fazendo: #FBE23E; finalizado: #2F993D;*/
+    min-width: 17vw;
+    width: auto; /* Antes era 15vw */
+    
+    
+    /*overflow-y: auto;*/ /*AVALIAR*/
+    height: auto;
     min-height: 15vh;
-    margin: 2vh auto;
+    margin: auto;
+    font-size: 1rem;
+    
 }
 
 .tituloAtividade
@@ -124,14 +142,29 @@ form {
     background-color: rgba(255, 255, 255, 0.336);
 }
 
+.descricao
+{
+    border-bottom: dashed thin black;
+    padding-bottom: 0.5vh;
+    background-color: rgba(240, 248, 255, 0.712);
+    font-size: 1rem;
+}
+
+.descricao ~ *
+{
+    font-size: 0.8rem;
+}
+
 .atributos-atividade-container { /* Novo */
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
 .autor-prioridade { /* Novo */
     display: flex;
+    /*align-items: center;*/
     justify-content: space-between;
-    margin: .5rem 0;
+    /*margin: .5rem 0;*/
+    height: 4vh;
 }
 
 .data-container { /* Novo */
@@ -145,9 +178,114 @@ form {
     visibility: hidden;
     height: 0;
     transition: height 1s;
+    border-top: dashed thin black;
+}
+.atividade:hover
+{
+    z-index: 1;
 }
 .atividade:hover .extra
 {
     visibility: visible;
     height: auto;
+}
+
+/*Formulário*/
+#botaoAdicao
+{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    right: 0;
+    margin: 0 1vw 0 0;
+    height: 6.5vh;
+    width: 6.5vh;
+    color: #5f453bb7;
+    border-radius: 90%;
+    border: thin darkblue solid;
+    transition: transform 500ms;
+    z-index: 2;
+}
+
+.traco
+{
+    width: 1vw;
+    height: 0.5vh;
+    background-color: black;
+    position: fixed;
+    transition: margin-bottom 500ms;
+}
+#traco2
+{
+    transform: rotate(90deg);
+}
+#traco3
+{
+    visibility: hidden;
+}
+
+#ativarBotaoAdicao:checked ~ #botaoAdicao
+{
+
+    transform: rotate(90deg);
+}
+
+#ativarBotaoAdicao:checked ~ #botaoAdicao #traco1{
+    transform: rotate(45deg) translateX(0.5vh);
+    transform-origin: right;
+    transition: transform 500ms;
+}
+#ativarBotaoAdicao:checked ~ #botaoAdicao #traco3
+{
+    visibility: visible;
+    transform-origin: left;
+    transform: rotate(-45deg) translateX(-0.5vh);
+    transition: transform 500ms;
+}
+
+#adicionarAtividade
+{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 25vw;
+    margin-left: 75vw;
+    background-image: linear-gradient(180deg, rgb(41, 219, 226), rgba(0, 49, 185, 0.8));
+    border-left: dashed thin black;
+    z-index: 1;
+}
+
+.animacaoMenu
+{
+    animation: menuAnim forwards 500ms;
+}
+@keyframes menuAnim {
+    0%
+    {
+        margin-left: 100vw;
+    }
+    100%
+    {
+        margin-left: 75vw;
+    }
+}
+#adicionarAtividade form
+{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 1.1rem;
+}
+#adicionarAtividade input, #adicionarAtividade select
+{
+    background-color: rgb(202, 202, 202);
+}
+#adicionarAtividade [type='submit']
+{
+    margin-top: 2vh;
 }
