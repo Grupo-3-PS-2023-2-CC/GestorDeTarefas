@@ -92,52 +92,58 @@
             {
                 //console.log(`Lendo tarefa `, tarefa);
                 estadoFormatado = tarefa.estado.match(/\w+/gi).join('').toLowerCase();
-                let coluna = document.querySelector(`#${estadoFormatado}`);
-                let linha = coluna.querySelector(`.${tarefa.prioridade}`);
-                let cor;
-                switch(estadoFormatado)
-                {
-                    case "afazer":
-                        cor = '#E53324';
-                        break;
-                    case "fazendo":
-                        cor = '#FBE23E';
-                        break;
-                    case "finalizado":
-                        cor = '#2F993D';
-                        break;
-                    default:
-                        cor = 'purple';
-                }
-                linha.innerHTML += 
-                `
-                <div class="atividade" draggable="true">
-                            <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
+
+                //Analisando se a tarefa puxada do BD está adequada para ser carregada.
+                if(['afazer', 'fazendo', 'finalizado'].includes(estadoFormatado) && tarefa.prioridade){
+                    let coluna = document.querySelector(`#${estadoFormatado}`);
+                    let linha = coluna.querySelector(`.${tarefa.prioridade}`);
+                    let cor;
+                    switch(estadoFormatado)
+                    {
+                        case "afazer":
+                            cor = '#E53324';
+                            break;
+                        case "fazendo":
+                            cor = '#FBE23E';
+                            break;
+                        case "finalizado":
+                            cor = '#2F993D';
+                            break;
+                        default:
+                            cor = 'purple';
+                    }
+                    linha.innerHTML += 
+                    `
+                    <div class="atividade" draggable="true">
+                        <button class="move up" onclick="mover(+1, this)">↑</button>    
+                        <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
                             <div class="atributos-atividade-container">
-                                <p class="descricao">
-                                    ${tarefa.descricao}
-                                </p>
-                                <div class="data-container">
-                                    <p class="data-rotulo">Prazo:</p>
-                                    <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
-                                </div>
-                                <div class="extra">
-                                    <div class="autor-prioridade">
-                                    <p class="autor">${tarefa.autor}</p>
-                                    <p class="nome-prioridade">${tarefa.prioridade}</p>
-                                    </div>
+                                    <p class="descricao">
+                                        ${tarefa.descricao}
+                                    </p>
                                     <div class="data-container">
-                                        <p class="data-rotulo">Criada:</p>
-                                        <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
+                                        <p class="data-rotulo">Prazo:</p>
+                                        <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
                                     </div>
-                                    <div class="data-container">
-                                        <p class="data-rotulo">Modificada:</p>
-                                        <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
-                                </div>
-                                </div>
+                                    <div class="extra">
+                                        <div class="autor-prioridade">
+                                        <p class="autor">${tarefa.autor}</p>
+                                        <p class="nome-prioridade">${tarefa.prioridade}</p>
+                                        </div>
+                                        <div class="data-container">
+                                            <p class="data-rotulo">Criada:</p>
+                                            <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
+                                        </div>
+                                        <div class="data-container">
+                                            <p class="data-rotulo">Modificada:</p>
+                                            <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
                             </div>
-                        </div>
-                `;
+                            <button class="move down" onclick="mover(-1, this)">↓</button>
+                    </div>
+                    `;        
+                }
             }
         )
     </script>

@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 // Schema ___________________________________________________________________________
 
 //Criaremos um novo objeto do tipo schema.  O construtor receberá as configurações.
+const prioridades = ['alta', 'media', 'baixa'];
+const estados = ['afazer', 'fazendo', 'finalizado'];
 const tarefa = new mongoose.Schema
 (
     //Objeto de configurações
@@ -18,7 +20,11 @@ const tarefa = new mongoose.Schema
         //Descrição
         descricao: {type: String, required: true},
         // Prioridade
-        prioridade: {type: String, required: true},
+        prioridade: {
+            type: String, 
+            required: true, 
+            validate: (prioridade) => prioridades.includes(prioridade)
+        },
         //Autor
         autor: {type: String, required: true},
         //Data de Criação
@@ -26,10 +32,13 @@ const tarefa = new mongoose.Schema
         //Última Modificação
         ultimaModificacao: {type: Date, required: false, default: Date.now()},
         //Prazo
-                                            // Acho que o prazo não necessita de um default, pois o usuário terá que inserir uma data de prazo.
-        prazo: {type: Date, required: true, default: Date.now()},
+        prazo: {type: Date, required: true},
         //Estado (a fazer, fazendo ou finalizado)
-        estado: {type: String, required: true} // Adicionado
+        estado: {
+            type: String, 
+            required: true, 
+            validade: (estado)=>estados.includes(estado)
+        }
     }
 )
 
