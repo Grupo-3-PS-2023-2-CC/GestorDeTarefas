@@ -9,8 +9,7 @@ const mongoose = require('mongoose');
 // Schema ___________________________________________________________________________
 
 //Criaremos um novo objeto do tipo schema.  O construtor receberá as configurações.
-const prioridades = ['alta', 'media', 'baixa'];
-const estados = ['afazer', 'fazendo', 'finalizado'];
+const estados = ['bloqueado', 'afazer', 'fazendo', 'finalizado'];
 const tarefa = new mongoose.Schema
 (
     //Objeto de configurações
@@ -19,12 +18,6 @@ const tarefa = new mongoose.Schema
         nome: {type: String, required: true, unique: true},
         //Descrição
         descricao: {type: String, required: true},
-        // Prioridade
-        prioridade: {
-            type: String, 
-            required: true, 
-            validate: (prioridade) => prioridades.includes(prioridade)
-        },
         //Autor
         autor: {type: String, required: true},
         //Data de Criação
@@ -37,7 +30,7 @@ const tarefa = new mongoose.Schema
         estado: {
             type: String, 
             required: true, 
-            validade: (estado)=>estados.includes(estado)
+            validate:{ validator: (estado)=>estados.includes(estado)}
         }
     }
 )

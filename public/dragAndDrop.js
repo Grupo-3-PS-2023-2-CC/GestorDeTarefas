@@ -28,18 +28,36 @@ document.addEventListener('drop', function(event) {
 
     let arrastado = document.querySelector('.dragged');
     console.log(arrastado);
+    let colunaAtual = arrastado.parentElement.parentElement.parentElement.id;
 
-    //Se o espaço for uma linha de prioridade
-    if(event.target.classList.value.match(/prioridade/))
+    //Se o espaço for uma coluna ou linha de prioridade
+    if(event.target.classList.value.match(/(coluna|prioridade)/))
     {
-        //Identifique a prioridade e a coluna
-        let strColuna = event.target.parentElement.parentElement.id;
-        let titulo = arrastado.querySelector('.tituloAtividade');
-        let prioridade = event.target.classList.value.match(/alta|media|baixa/i)[0];
+        //Identifique a coluna a colocar a tarefa
+        let strColuna = event.target.classList.value.match(/coluna/) ? event.target.id : event.target.parentElement.parentElement.id;
+
+        //Se a tarefa não puder, de fato, ser colocada ali.
+        if(strColuna == 'finalizado' && colunaAtual == 'afazer') 
+        {
+            alert(`Não é possível mover uma tarefa de 'A Fazer' para 'Finalizado'.`);
+            arrastado.classList.remove('dragged'); 
+            return;
+        }
+        else if(strColuna == 'finalizado' && colunaAtual == 'bloqueado')
+        {
+            alert(`Não é possível mover uma tarefa de 'Bloqueado' para 'Finalizado'.`); 
+            arrastado.classList.remove('dragged');
+            return;
+        }
         
+        let titulo = arrastado.querySelector('.tituloAtividade');
+
         //Modifique a tarefa       
         switch(strColuna)
         {
+            case "bloqueado":
+                titulo.style.backgroundColor = '#495766'
+                break;
             case "afazer":
                 titulo.style.backgroundColor = '#E53324';
                 break;
@@ -49,10 +67,9 @@ document.addEventListener('drop', function(event) {
             case "finalizado":
                 titulo.style.backgroundColor = '#2F993D';
         }
-        arrastado.querySelector('.nome-prioridade').textContent = prioridade;
 
         //Salvando em BD
-        salvarModificacaoTarefa(arrastado, prioridade, strColuna);
+        salvarModificacaoTarefa(arrastado, strColuna);
 
         //Coloque a tarefa
         event.target.classList.remove('drag-over');

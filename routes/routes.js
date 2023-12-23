@@ -6,6 +6,7 @@
 // Importação de Módulos __________________________________________________
 const routes = require("express").Router();
 const taskController = require('../controller/TaskController')
+const userController = require('../controller/UserController');
 
 // Caminhos (URLs) ________________________________________________________
 
@@ -21,6 +22,9 @@ routes.post('/criar', taskController.adicionarTarefa);
 
 //Atualização de Posição
 routes.post('/modificar', taskController.modificar);
+
+//Registrando Usuário
+routes.post('/registrar', userController.registrar);
 
 // Exportação _____________________________________________________________
 module.exports = routes;

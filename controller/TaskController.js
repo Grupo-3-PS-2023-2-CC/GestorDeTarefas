@@ -5,6 +5,7 @@
 
 // Importações __________________________________________________
 const tarefa = require('../models/Tarefa');
+const usuario = require('../models/Usuario');
 
 // Funções ______________________________________________________
 
@@ -13,8 +14,10 @@ const getAll = async (req, res) =>
 {
     try
     {
-        const tarefas = await tarefa.find();
-       res.render("index", {tarefas}); //renderiza o index.ejs, buscando-o em "/views"
+       const tarefas = await tarefa.find();
+       const usuarios = await usuario.find();
+      // console.log(usuarios);
+       res.render("index", {tarefas, usuarios}); //renderiza o index.ejs, buscando-o em "/views"
        //o segundo parâmetro inclui o tarefa.find(), que busca na coleção o que corresponde aos critérios dos parâmetros (nesse caso, sem filtros).
     }
     catch(error)
@@ -25,23 +28,24 @@ const getAll = async (req, res) =>
 }
 
 //Criação de Tarefa (POST)
+const diaEmMiliseg = 24 * 60 * 60 * 1000;
 const adicionarTarefa = async (req, res)=>
 {
     const body = req.body;
     if(!body) return res.redirect('/'); //Se não houver corpo, redirecionar para página principal
     try
     {
+
         //Criando tarefa no banco de dados, a partir da schema de tarefa.
         await tarefa.create(
             {
                 nome: body.nome,
                 autor: body.autor,
                 descricao: body.descricao,
-                estado: body.estado,
-                prioridade: body.prioridade,
+                estado: 'afazer',
                 dataCriacao: Date.now(),
                 ultimaModificacao: Date.now(),
-                prazo: body.prazo
+                prazo: new Date(body.prazo).getTime() + diaEmMiliseg //o dia extra funciona como correção
             });
 
         //Redirecionando para página principal
@@ -56,12 +60,14 @@ const adicionarTarefa = async (req, res)=>
 };
 
 //Modificando Tarefa
+const estados = ['bloqueado', 'afazer', 'fazendo', 'finalizado'];
 const modificar = async (req, res) =>
 {
     body = req.body;
     try{
         //Modificando tarefa
-        await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {prioridade: body.prioridade, estado: body.estado, ultimaModificacao: Date.now()}});
+        if(estados.includes(body.estado))
+            await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {estado: body.estado, ultimaModificacao: Date.now()}});
         res.redirect('/');
     }
     catch(error)

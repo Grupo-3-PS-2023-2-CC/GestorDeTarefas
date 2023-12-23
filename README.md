@@ -7,7 +7,7 @@ Repositório para o desenvolvimento do projeto do Grupo 3 - PS 2023.2 - CC.
 
 * Kanban (To-do, Em Progresso, Revisão de Código, Feito)
 * Aplicação Web, também mobile, com responsividade.
-* Prazo: até dia <b>29/12</b>
+* Prazo: até dia <b>28/12</b>
 * Qualquer linguagem de programação.
 * Feedback de 6 em 6 dias.
 * Preço a definir.

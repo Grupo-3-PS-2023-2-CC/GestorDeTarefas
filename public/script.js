@@ -1,3 +1,38 @@
+/* Iniciando Login ------------------------------------------*/
+//Verificando se o usuário já foi identificado.
+let usuario = localStorage.getItem('usuario');
+if(!usuario)
+{
+    //Abrindo Menu de Login
+    menu = document.querySelector('#login');
+    menu.style.visibility = 'visible';
+}
+else document.querySelector('#autor').value = localStorage.getItem('usuario');
+
+function alterarFormulario()
+{
+    document.querySelector('#form-registrar').style.visibility = 'visible';
+    document.querySelector('#form-selecionar').style.visibility = 'hidden';
+}
+function entrarComSelecao()
+{
+    localStorage.setItem('usuario', document.querySelector('#opcoes-usuario').value);
+    location.reload();
+}
+
+function registrar(botaoRegistrar)
+{
+    localStorage.setItem('usuario', botaoRegistrar.parentElement.querySelector('#registro-nome').value);
+    document.querySelector('#registro-post').click();
+}
+function logoff()
+{
+    localStorage.removeItem('usuario');
+    location.reload();
+}
+
+/*---------------------------------------------------------- */
+
 /**
  * Ativa e desativa o menu de adição de tarefas. É chamado pelo botão de adição.
  */
@@ -23,16 +58,14 @@ function ativarMenu()
 /**
  * Manda uma requisição POST ao servidor, de forma a atualizar uma tarefa com uma nova prioridade e estado.
  * @param {HTMLElement} nodeTarefa Elemento HTML de classe 'tarefa'.
- * @param {String} prioridade 'alta', 'media' ou 'baixa'. É a nova prioridade da tarefa.
  * @param {String} estado 'afazer', 'fazendo' ou 'finalizado'. É o novo estado da tarefa.
  */
-function salvarModificacaoTarefa(nodeTarefa, prioridade, estado)
+function salvarModificacaoTarefa(nodeTarefa, estado)
 {
     //Salvando em BD
     let formulario = document.querySelector('#modificar');
     formulario.querySelector('#nome').value = nodeTarefa.querySelector('.tituloAtividade').textContent;
     formulario.querySelector('#descricao').value = nodeTarefa.querySelector('.descricao').textContent;
-    formulario.querySelector('#prioridade').value = prioridade;
     formulario.querySelector('#estado').value = estado;
     
     formulario.querySelector('button').click();
@@ -64,4 +97,17 @@ function mover(sentido, botao)
     else if(prioridade == 'alta' && sentido==-1) salvarModificacaoTarefa(tarefa, 'media', strColuna);
     else if(prioridade == 'media' && sentido==1) salvarModificacaoTarefa(tarefa, 'alta', strColuna);
     else if(prioridade == 'media' && sentido==-1) salvarModificacaoTarefa(tarefa, 'baixa', strColuna);
+}
+
+
+function ativarModal(atividade)
+{
+    let modal = atividade.querySelector('.modal');
+
+    if(modal.style.visibility == 'hidden') modal.style.visibility = 'visible';
+    else modal.style.visibility = 'hidden';
+}
+function desativarModal(modal)
+{
+    modal.style.visibility = 'hidden';
 }
