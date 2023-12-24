@@ -31,7 +31,11 @@ const tarefa = new mongoose.Schema
             type: String, 
             required: true, 
             validate:{ validator: (estado)=>estados.includes(estado)}
-        }
+        },
+        //Motivo de Bloqueio
+        bloqueio: {type: String},
+        //Atribuído a
+        atribuicao: {type: String, required: true}
     }
 )
 

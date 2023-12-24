@@ -7,7 +7,11 @@ if(!usuario)
     menu = document.querySelector('#login');
     menu.style.visibility = 'visible';
 }
-else document.querySelector('#autor').value = localStorage.getItem('usuario');
+else 
+{
+    document.querySelector('#autor').value = localStorage.getItem('usuario');
+    document.querySelector('#atribuicao').value = localStorage.getItem('usuario');
+}
 
 function alterarFormulario()
 {
@@ -60,13 +64,14 @@ function ativarMenu()
  * @param {HTMLElement} nodeTarefa Elemento HTML de classe 'tarefa'.
  * @param {String} estado 'afazer', 'fazendo' ou 'finalizado'. É o novo estado da tarefa.
  */
-function salvarModificacaoTarefa(nodeTarefa, estado)
+function salvarModificacaoTarefa(nodeTarefa, estado, motivoBloqueio='')
 {
     //Salvando em BD
     let formulario = document.querySelector('#modificar');
     formulario.querySelector('#nome').value = nodeTarefa.querySelector('.tituloAtividade').textContent;
     formulario.querySelector('#descricao').value = nodeTarefa.querySelector('.descricao').textContent;
     formulario.querySelector('#estado').value = estado;
+    formulario.querySelector('#bloqueio').value = motivoBloqueio.replaceAll('"', '\'');
     
     formulario.querySelector('button').click();
 }
@@ -100,14 +105,14 @@ function mover(sentido, botao)
 }
 
 
-function ativarModal(atividade)
+function ativarPopup(atividade)
 {
-    let modal = atividade.querySelector('.modal');
+    let modal = atividade.querySelector('.popup');
 
     if(modal.style.visibility == 'hidden') modal.style.visibility = 'visible';
     else modal.style.visibility = 'hidden';
 }
-function desativarModal(modal)
+function desativarPopup(modal)
 {
     modal.style.visibility = 'hidden';
 }

@@ -50,30 +50,38 @@ document.addEventListener('drop', function(event) {
             return;
         }
         
+        //Se a tarefa estiver sendo movida para bloqueado, a partir de outro lugar.
+        let aguardaMotivoBloqueio = false;
+        if(strColuna == 'bloqueado' && colunaAtual != 'bloqueado')
+        {
+            //Requisitar motivo
+            let modalBloqueio = document.querySelector('#modal-bloqueio');
+            modalBloqueio.style.visibility = 'visible';
+            aguardaMotivoBloqueio = true;
+        }
+
         let titulo = arrastado.querySelector('.tituloAtividade');
 
         //Modifique a tarefa       
-        switch(strColuna)
-        {
-            case "bloqueado":
-                titulo.style.backgroundColor = '#495766'
-                break;
-            case "afazer":
-                titulo.style.backgroundColor = '#E53324';
-                break;
-            case "fazendo":
-                titulo.style.backgroundColor = '#FBE23E';
-                break;
-            case "finalizado":
-                titulo.style.backgroundColor = '#2F993D';
-        }
+        titulo.style.backgroundColor = '#495766';
 
         //Salvando em BD
-        salvarModificacaoTarefa(arrastado, strColuna);
-
-        //Coloque a tarefa
-        event.target.classList.remove('drag-over');
-        event.target.appendChild(draggedItem);
-        arrastado.classList.remove('dragged');
+        if(!aguardaMotivoBloqueio) 
+        {
+            salvarModificacaoTarefa(arrastado, strColuna);
+            //Coloque a tarefa
+            event.target.classList.remove('drag-over');
+            event.target.appendChild(draggedItem);
+            arrastado.classList.remove('dragged');
+        }
     }
 });
+
+function passarParaBloqueio()
+{
+    let arrastado = document.querySelector('.dragged');
+    salvarModificacaoTarefa(arrastado, 'bloqueado', document.querySelector('#texto-motivo').value);
+    //Coloque a tarefa
+    document.querySelector('.drag-over').classList.remove('drag-over');
+    arrastado.classList.remove('dragged');
+}

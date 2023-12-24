@@ -12,6 +12,8 @@ const usuario = require('../models/Usuario');
 //Caminho Padrão
 const getAll = async (req, res) => 
 {
+    //await tarefa.deleteMany({}); //Apagando tudo
+    
     try
     {
        const tarefas = await tarefa.find();
@@ -27,7 +29,7 @@ const getAll = async (req, res) =>
     }
 }
 
-//Criação de Tarefa (POST)
+//Criação de Tarefa (POST)s
 const diaEmMiliseg = 24 * 60 * 60 * 1000;
 const adicionarTarefa = async (req, res)=>
 {
@@ -45,7 +47,8 @@ const adicionarTarefa = async (req, res)=>
                 estado: 'afazer',
                 dataCriacao: Date.now(),
                 ultimaModificacao: Date.now(),
-                prazo: new Date(body.prazo).getTime() + diaEmMiliseg //o dia extra funciona como correção
+                prazo: new Date(body.prazo).getTime() + diaEmMiliseg, //o dia extra funciona como correção
+                atribuicao: body.atribuicao
             });
 
         //Redirecionando para página principal
@@ -67,7 +70,7 @@ const modificar = async (req, res) =>
     try{
         //Modificando tarefa
         if(estados.includes(body.estado))
-            await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {estado: body.estado, ultimaModificacao: Date.now()}});
+            await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {estado: body.estado, ultimaModificacao: Date.now(), bloqueio: body.bloqueio}});
         res.redirect('/');
     }
     catch(error)
