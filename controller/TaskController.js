@@ -80,10 +80,26 @@ const modificar = async (req, res) =>
     }
 }
 
+const atualizarData = async(req, res)=>
+{
+    body = req.body;
+    try
+    {
+        if(body.nome && body.data)
+            await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {prazo: new Date(body.data).getTime() + diaEmMiliseg}});
+        res.status(200).redirect('/');
+    }
+    catch(error)
+    {
+
+    }
+}
+
 //Exportação ____________________________________________________
 module.exports = 
 {
     getAll,
     adicionarTarefa,
-    modificar
+    modificar,
+    atualizarData
 }

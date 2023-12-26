@@ -181,6 +181,10 @@ form {
     height: 8vh;
     height: auto;
 }
+#form-atualizar-data input[type="date"]
+{
+    text-align: center;
+}
 
 #finalizado .popup
 {

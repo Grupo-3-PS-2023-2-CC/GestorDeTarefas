@@ -26,5 +26,8 @@ routes.post('/modificar', taskController.modificar);
 //Registrando Usuário
 routes.post('/registrar', userController.registrar);
 
+//Atualizando Prazos de Tarefas
+routes.post('/atualizarData', taskController.atualizarData);
+
 // Exportação _____________________________________________________________
 module.exports = routes;
