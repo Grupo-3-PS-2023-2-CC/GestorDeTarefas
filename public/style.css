@@ -147,7 +147,7 @@ form {
     min-height: 20vh;
     height: auto;
     text-align: center;
-    padding: 1vw 1vh;
+    padding: /*1vw 1vh*/ 1rem;
     cursor:auto;
     z-index: 2;
     max-height: 85vh;
@@ -164,7 +164,7 @@ form {
     border-radius: 10px;
     font-size: 1rem;
     background-color: white;
-    width: 20vw;
+    /*width: 20vw;*/
     height: auto;
     max-height: 8vh;
     overflow-y: auto;
@@ -503,13 +503,115 @@ nav button
     .atividade
     {
         overflow-y: initial;
-        min-width: 20vw;
+        min-width: 32vw;
+        border-radius: 1rem;
+
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: 1px 2px 2px 1px rgba(39, 47, 54, 0.315);
+        background-color: #dddddd;
+        /*a fazer: #E53324; fazendo: #FBE23E; finalizado: #2F993D;*/
+        width: 12vw; /* Antes era 15vw */
+        cursor: grab;
+        
+        overflow-y: auto;
+        height: auto;
+        min-height: 15vh;
+        width: 10vw;
+        margin: auto;
+        font-size: 1rem;
+        transition: box-shadow 250ms;
     }
 
     .atividade:hover
     {
         overflow-y: auto;
     }
+
+    .tituloAtividade
+    {
+        background-image: radial-gradient();
+        font-size: 1.2rem;
+        text-align: center;
+        font-weight: 500;
+        background-color: rgba(255, 255, 255, 0.336);
+    }
+
+    /*Só usa*/
+    .descricao ~ *
+{
+    font-size: 0.8rem;
+}
+
+.atributos-atividade-container { /* Novo */
+    margin: 0.5rem;
+}
+
+.autor-prioridade { /* Novo */
+    display: flex;
+    /*align-items: center;*/
+    justify-content: space-between;
+    /*margin: .5rem 0;*/
+    height: 4vh;
+}
+
+.data-container { /* Novo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    flex-direction: row;
+}
+.data-container img
+{
+    height: 15vh;
+}
+.data-container .data
+{
+    width: 32vw;
+}
+
+.extra
+{
+    margin-top: 1.5vh;
+    visibility: hidden;
+    height: 0;
+    transition: height 1s;
+    border-top: dashed thin black;
+}
+.atividade:hover
+{
+    z-index: 1;
+}
+.atividade:hover .extra
+{
+    visibility: visible;
+    height: auto;
+}
+
+.popup
+{
+    position: absolute;
+    background-color: #495766;
+    width: 80vw;
+    color: #FFF;
+    min-height: 20vh;
+    height: auto;
+    text-align: center;
+    padding: 1rem;
+    cursor:auto;
+    z-index: 2;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 40px;
+    bottom: 6.5vh;
+}
+
+.popup p
+{
+    font-size: 1rem;
+}
 
     .coluna
     {
