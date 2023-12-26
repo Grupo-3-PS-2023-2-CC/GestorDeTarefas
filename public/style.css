@@ -513,7 +513,7 @@ nav button
 
     .coluna
     {
-        width: 100vw !important;
+        min-width: 100vw !important;
         height: 95%;
         margin-top: 0.5vh;
     }
