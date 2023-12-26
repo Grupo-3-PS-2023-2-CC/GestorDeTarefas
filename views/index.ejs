@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="LogoFocus.png" type="image/png">
+    <link rel="shortcut icon" href="/LogoFocus.png" type="image/png">
     <link rel="stylesheet" href="/style.css">
     <title>Kanban</title>
 </head>
@@ -55,7 +55,7 @@
 
     <header>
         <nav>
-            <img src="LogoFocus2.webp" alt="Logo Focus">
+            <img src="LogoFocus4.png" alt="Logo Focus">
             <input id="ativarBotaoAdicao" type="checkbox" style="visibility: hidden;"/>
             <button type="menu" id="botaoAdicao" value="+" onclick="ativarMenu()">
             <div id="traco1" class="traco"></div>
@@ -108,12 +108,16 @@
         <% let idsColunas = ['bloqueado', 'afazer', 'fazendo', 'finalizado']%>
         <%colunas.forEach((coluna, i)=>{%>
             <section class="coluna" id=<%=idsColunas[i]%>>
+                <div class="container-img">
+                    <img src="LogoFocusNegativa3.png" alt="Logo Focus">
+                </div>
                 <h1><%=coluna%></h1>
                 <div class="atividades">
                     <div class="prioridade alta"></div>
                     <div class="prioridade media"></div>
                     <div class="prioridade baixa"></div>
                 </div>
+                
             </section>
         <%})%>
 
@@ -165,9 +169,18 @@
                     let motivoBloqueio = '';
                     if(tarefa.bloqueio) motivoBloqueio = 
                     `
-                    <p>Motivo de bloqueio:</p>
-                    <p>${tarefa.bloqueio}</p>
+                    <div class="data-container">
+                        <img src="LogoFocusNegativa.webp" alt="Logo Focus" draggable="false">
+                        <div style="text-align: center">
+                            <p class="data-rotulo">Motivo de Bloqueio:</p>
+                            <p class="data">${tarefa.bloqueio}</p>
+                        </div>
+                    </div>
                     `;
+                    else motivoBloqueio =
+                    `
+                    <img src="LogoFocus4.png" alt="Logo Focus" draggable="false">
+                    `
 
                     linha.innerHTML += 
                     `
@@ -179,36 +192,30 @@
                             <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
                         
                         </div>
-
                         <!-- Pop Up -->
                         <div class="atributos-atividade-container popup" style="visibility: hidden;" onmouseleave="desativarPopup(this)">
-                                    <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
-                                    Descrição
-                                    <p class="descricao">
-                                        ${tarefa.descricao}
-                                    </p>
-                                    <div class="data-container">
-                                        <p class="data-rotulo">Prazo:</p>
-                                        <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
-                                    </div>
-                                    <div class="data-container">
-                                        <p class="autor">${tarefa.autor}</p>
-                                        <p class="nome-prioridade">${prioridade}</p>
-                                    </div>
-                                    <div class="data-container">
-                                        <p class="data-rotulo">Criada:</p>
-                                        <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
-                                    </div>
-                                    <div class="data-container">
-                                        <p class="data-rotulo">Modificada:</p>
-                                        <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
-                                    </div>
-                                    <div class="data-container">
-                                        <p class="data-rotulo">Atribuída a:</p>
-                                        <p class="data">${tarefa.atribuicao}</p>
-                                    </div>
-                                    ${motivoBloqueio}
-                            </div>
+                            <h2>${tarefa.nome}</h2>
+                            Descrição
+                            <p class="data descricao">
+                                ${tarefa.descricao}
+                            </p>
+
+                            <p class="data-rotulo">Prazo:</p>
+                            <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
+
+                            <p class="data-rotulo">Autor:</p>
+                            <p class="data">${tarefa.autor}</p>
+                            <p class="data-rotulo">Prioridade:</p>
+                            <p class="data">${prioridade}</p>
+                            <p class="data-rotulo">Criada:</p>
+                            <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
+                            <p class="data-rotulo">Modificada:</p>
+                            <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
+                            <p class="data-rotulo">Atribuída a:</p>
+                            <p class="data">${tarefa.atribuicao}</p>
+                            ${motivoBloqueio}
+                        </div>
+                        
                         <button class="move down" onclick="mover(-1, this)">↓</button>
                     </div>
                     `;        

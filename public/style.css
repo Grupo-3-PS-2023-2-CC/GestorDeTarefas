@@ -10,7 +10,8 @@
 
 body
 {
-    background-color: rgb(73, 87, 102);
+    background-image: linear-gradient(180deg, rgb(113, 195, 216), rgb(209, 209, 209));
+    background-attachment: fixed;
 }
 
 nav
@@ -18,7 +19,8 @@ nav
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(90deg, rgb(61, 113, 138), rgb(233, 233, 233), rgb(61, 113, 138));
+    /*background-image: linear-gradient(90deg, rgb(61, 113, 138), rgb(233, 233, 233), rgb(61, 113, 138));*/
+    background-image: linear-gradient(270deg, #0032B9 0%, #0032B9 14.29%, rgba(0, 50, 185, 0.80) 57.14%, #0032B9 71.43%, #0032B9 100%);
     height: 10vh;
     width: 100%;
     color: white;
@@ -66,38 +68,54 @@ form {
 
 .coluna
 {
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.144);
-    border-radius: 5px;
-    height: 82vh;
+    /*box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.144);*/
+    height: 100%;
     overflow-x: auto;
-    width: 33vw;
-    margin: 2vh 0.5vw 0 0.5vw;
+    width: 25vw;
+}
+.coluna ~ img
+{
+    opacity: 0.5;
+    width: 50%;
+    height: auto;
+    position: absolute;
+}
+.container-img
+{
+    position: fixed;
+    width: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
 }
 
 #bloqueado
 {
-    background-color: rgb(106, 127, 150);
+    background-color: rgba(73, 87, 102, 0.50);
 }
 #afazer
 {
-    background-color: rgb(0, 50, 185);
+    background-color: rgba(79, 139, 255, 0.50);;
 }
 #fazendo
 {
-    background-color: rgb(0, 103, 236);
+    background-color: rgba(0, 103, 236, 0.50);
 }
 #finalizado
 {
-    background-color: rgb(41, 219, 226);
+    background-color: rgba(0, 50, 185, 0.50);;
 }
 
 .coluna h1
 {
     text-align: center;
     color: white;
-    border-bottom: dashed thin black;
     background-color: rgba(44, 44, 44, 0.315);
     margin-bottom: 2vh;
+    font-style: italic;
 }
 
 .prioridade
@@ -123,18 +141,47 @@ form {
 .popup
 {
     position: absolute;
-    background-image: linear-gradient(180deg, rgb(90, 90, 90), rgb(51, 51, 51));
-    width: 30vw;
-    color: white;
+    background-color: #495766;
+    width: 25vw;
+    color: #FFF;
     min-height: 20vh;
     height: auto;
-    margin: auto;
-    padding: 2vw 2vh;
+    text-align: center;
+    padding: 1vw 1vh;
     cursor:auto;
     z-index: 2;
-
-    border-radius: 10px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 40px;
+    bottom: 6.5vh;
 }
+.popup p
+{
+    font-size: 1rem;
+}
+.popup .data
+{
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: white;
+    width: 20vw;
+    height: auto;
+    max-height: 8vh;
+    overflow-y: auto;
+    margin: auto;
+    color: black;
+}
+.popup p
+{
+    margin-top: 1vh;
+}
+.popup img
+{
+    margin-top: 3vh;
+    height: 8vh;
+    height: auto;
+}
+
 #finalizado .popup
 {
     margin-left: -20vw;
@@ -260,17 +307,6 @@ form {
     background-color: rgba(255, 255, 255, 0.336);
 }
 
-.descricao
-{
-    border-bottom: dashed thin black;
-    padding-bottom: 0.5vh;
-    background-color: rgba(240, 248, 255, 0.712);
-    font-size: 0.90rem;
-    overflow-y: auto;
-    max-height: 10vh;
-    padding: 1vh 1vw;
-}
-
 .descricao ~ *
 {
     font-size: 0.8rem;
@@ -290,7 +326,18 @@ form {
 
 .data-container { /* Novo */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    flex-direction: row;
+}
+.data-container img
+{
+    height: 15vh;
+}
+.data-container .data
+{
+    width: 15vw;
 }
 
 .extra
