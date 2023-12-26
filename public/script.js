@@ -116,3 +116,12 @@ function desativarPopup(modal)
 {
     modal.style.visibility = 'hidden';
 }
+
+/**
+ * Altera a data de uma tarefa, a partir do pop-up.
+ * @param {HTMLElement} entrada 
+ */
+function atualizarData(entrada)
+{
+    entrada.parentElement.querySelector('#atualizar-data').click();
+}

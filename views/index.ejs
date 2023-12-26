@@ -182,6 +182,7 @@
                     <img src="LogoFocus4.png" alt="Logo Focus" draggable="false">
                     `
 
+                    const prazoStr = `${prazo.getFullYear()}-${(prazo.getMonth() + 1).toString().length == 2 ? prazo.getMonth()+1 : `0${prazo.getMonth()+1}`}-${prazo.getDate()}`;
                     linha.innerHTML += 
                     `
                     <div class="atividade" draggable="true" onclick="ativarPopup(this)">
@@ -190,7 +191,6 @@
                         <div class="conteudo">
                             <p class="autor">${tarefa.autor}</p>
                             <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
-                        
                         </div>
                         <!-- Pop Up -->
                         <div class="atributos-atividade-container popup" style="visibility: hidden;" onmouseleave="desativarPopup(this)">
@@ -201,7 +201,11 @@
                             </p>
 
                             <p class="data-rotulo">Prazo:</p>
-                            <p class="data">${new Date(tarefa.prazo).toLocaleDateString()}</p>
+                            <form id="form-atualizar-data" method="post" action="/atualizarData">
+                                <input id="nome-tarefa" name="nome" value="${tarefa.nome}" style="visibility: hidden; position: fixed;">
+                                <input class="data" type="date" name="data" value="${prazoStr}" onchange="atualizarData(this)">
+                                <input id="atualizar-data" type="submit" style="visibility: hidden; position: fixed;">
+                            </form>
 
                             <p class="data-rotulo">Autor:</p>
                             <p class="data">${tarefa.autor}</p>
