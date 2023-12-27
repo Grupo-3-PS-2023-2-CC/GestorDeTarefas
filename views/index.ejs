@@ -53,6 +53,10 @@
         </div>
     </div>
 
+    <div id="modal-tarefa" class="modal" style="visibility:hidden;" onclick="desativarPopup()">
+    
+    </div>
+
     <header>
         <nav>
             <img src="LogoFocus4.png" alt="Logo Focus">
@@ -75,7 +79,7 @@
                     <label for="descricao">Descrição:</label>
                     <input id="descricao" name="descricao" type="text">
 
-                    <label for="atribuicao">Atribuir a</label>
+                    <label for="atribuicao">Atribuir a:</label>
                     <select name="atribuicao" id="atribuicao">
                         <optgroup>
                             <%usuarios.forEach((usuario)=>{%>
@@ -88,13 +92,12 @@
                     
                     <label for="prazo">Prazo:</label>
                     <input id="prazo" name="prazo" type="date">
-                    <button type="submit">Adicionar tarefa</button>
+                    <button type="submit">Adicionar Tarefa</button>
                 </form>
             </section>
 
             <form action='/modificar' method="post" style="visibility: hidden; position: fixed;" id="modificar">
                 <input id="nome" name="nome" type="text">
-                <input id="descricao" name="descricao" type="text">
                 <input id="estado" type="text" name="estado" value=""/>
                 <input type="text" id="bloqueio" name="bloqueio"/>
                 <button type="submit">Modificar Tarefa</button>
@@ -183,49 +186,25 @@
                     `
 
                     const prazoStr = `${prazo.getFullYear()}-${(prazo.getMonth() + 1).toString().length == 2 ? prazo.getMonth()+1 : `0${prazo.getMonth()+1}`}-${prazo.getDate()}`;
+                    tarefa.motivoBloqueio = motivoBloqueio;
+                    tarefa.prazoStr = prazoStr;
+                    tarefa.prioridade = prioridade;
                     linha.innerHTML += 
                     `
-                    <div class="atividade" draggable="true" onclick="ativarPopup(this)">
+                    <div class="atividade" draggable="true" onclick="ativarPopup('${tarefa.nome}')">
                         <button class="move up" onclick="mover(+1, this)">↑</button>    
                         <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
                         <div class="conteudo">
                             <p class="autor">${tarefa.autor}</p>
                             <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
+                            
                         </div>
-                        <!-- Pop Up -->
-                        <div class="atributos-atividade-container popup" style="visibility: hidden;" onmouseleave="desativarPopup(this)">
-                            <h2>${tarefa.nome}</h2>
-                            Descrição
-                            <p class="data descricao">
-                                ${tarefa.descricao}
-                            </p>
-
-                            <p class="data-rotulo">Prazo:</p>
-                            <form id="form-atualizar-data" method="post" action="/atualizarData">
-                                <input id="nome-tarefa" name="nome" value="${tarefa.nome}" style="visibility: hidden; position: fixed;">
-                                <input class="data" type="date" name="data" value="${prazoStr}" onchange="atualizarData(this)">
-                                <input id="atualizar-data" type="submit" style="visibility: hidden; position: fixed;">
-                            </form>
-
-                            <p class="data-rotulo">Autor:</p>
-                            <p class="data">${tarefa.autor}</p>
-                            <p class="data-rotulo">Prioridade:</p>
-                            <p class="data">${prioridade}</p>
-                            <p class="data-rotulo">Criada:</p>
-                            <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
-                            <p class="data-rotulo">Modificada:</p>
-                            <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
-                            <p class="data-rotulo">Atribuída a:</p>
-                            <p class="data">${tarefa.atribuicao}</p>
-                            ${motivoBloqueio}
-                        </div>
-                        
                         <button class="move down" onclick="mover(-1, this)">↓</button>
                     </div>
                     `;        
                 }
             }
-        )
+        );
     </script>
 </body>
 </html>

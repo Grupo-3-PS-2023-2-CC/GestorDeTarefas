@@ -69,7 +69,6 @@ function salvarModificacaoTarefa(nodeTarefa, estado, motivoBloqueio='')
     //Salvando em BD
     let formulario = document.querySelector('#modificar');
     formulario.querySelector('#nome').value = nodeTarefa.querySelector('.tituloAtividade').textContent;
-    formulario.querySelector('#descricao').value = nodeTarefa.querySelector('.descricao').textContent;
     formulario.querySelector('#estado').value = estado;
     formulario.querySelector('#bloqueio').value = motivoBloqueio.replaceAll('"', '\'');
     
@@ -105,16 +104,53 @@ function mover(sentido, botao)
 }
 
 
-function ativarPopup(atividade)
+function ativarPopup(nomeTarefa)
 {
-    let modal = atividade.querySelector('.popup');
+    let modal = document.querySelector('#modal-tarefa');
+    let tarefa;
+    for(let umaTarefa of tarefas){if(umaTarefa.nome == nomeTarefa){ tarefa = umaTarefa;}}
 
-    if(modal.style.visibility == 'hidden') modal.style.visibility = 'visible';
+    if(modal.style.visibility == 'hidden')
+    {
+        //Deixando-o visível
+        modal.style.visibility = 'visible';
+
+        //Preenchendo seu conteúdo.
+        modal.innerHTML = `
+        <!-- Pop Up -->
+                        <div class="atributos-atividade-container popup">
+                            <h2>${tarefa.nome}</h2>
+                            Descrição
+                            <p class="data descricao">
+                                ${tarefa.descricao}
+                            </p>
+
+                            <p class="data-rotulo">Prazo:</p>
+                            <form id="form-atualizar-data" method="post" action="/atualizarData">
+                                <input id="nome-tarefa" name="nome" value="${tarefa.nome}" style="visibility: hidden; position: fixed;">
+                                <input class="data" type="date" name="data" value="${tarefa.prazoStr}" onchange="atualizarData(this)">
+                                <input id="atualizar-data" type="submit" style="visibility: hidden; position: fixed;">
+                            </form>
+
+                            <p class="data-rotulo">Autor:</p>
+                            <p class="data">${tarefa.autor}</p>
+                            <p class="data-rotulo">Prioridade:</p>
+                            <p class="data">${tarefa.prioridade}</p>
+                            <p class="data-rotulo">Criada:</p>
+                            <p class="data">${new Date(tarefa.dataCriacao).toLocaleDateString()}</p>
+                            <p class="data-rotulo">Modificada:</p>
+                            <p class="data">${new Date(tarefa.ultimaModificacao).toLocaleDateString()}</p>
+                            <p class="data-rotulo">Atribuída a:</p>
+                            <p class="data">${tarefa.atribuicao}</p>
+                            ${tarefa.motivoBloqueio}
+                        </div>`;
+                    
+    }
     else modal.style.visibility = 'hidden';
 }
-function desativarPopup(modal)
+function desativarPopup()
 {
-    modal.style.visibility = 'hidden';
+    document.querySelector('#modal-tarefa').style.visibility = 'hidden';
 }
 
 /**
