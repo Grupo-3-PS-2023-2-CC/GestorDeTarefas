@@ -82,25 +82,26 @@ function salvarModificacaoTarefa(nodeTarefa, estado, motivoBloqueio='')
  */
 function mover(sentido, botao)
 {
-    let tarefa = botao.parentElement;
-    let strColuna = tarefa.parentElement.parentElement.parentElement.id;
-    let estados = ['finalizado', 'fazendo', 'afazer'];
-    let indiceColuna;
-    const prioridade = tarefa.parentElement.classList[1];
+    let tarefa = botao.parentElement.querySelector('.atividade');
+    tarefa.classList.add('dragged');
+    let strColuna = tarefa.closest('.coluna').id;
+    let estados = ['bloqueado', 'afazer', 'fazendo', 'finalizado'];
     
-    if(strColuna=='afazer') indiceColuna = 2;
-    else if(strColuna=='fazendo') indiceColuna=1;
-    else indiceColuna=0;
 
+    const i = estados.indexOf(strColuna); //indice representando o estado no vetor 'estados'
     let novoEstado;
-    novoEstado = estados[indiceColuna + sentido];
+    novoEstado = estados[i + sentido];
+    document.querySelector(`#${novoEstado}`).classList.add('dragged-over');
 
-    if(prioridade == 'baixa' && sentido==-1) salvarModificacaoTarefa(tarefa, 'alta', novoEstado);
-    else if(prioridade == 'baixa' && sentido==1) salvarModificacaoTarefa(tarefa, 'media', strColuna);
-    else if(prioridade == 'alta' && sentido==1) salvarModificacaoTarefa(tarefa, 'baixa', novoEstado);
-    else if(prioridade == 'alta' && sentido==-1) salvarModificacaoTarefa(tarefa, 'media', strColuna);
-    else if(prioridade == 'media' && sentido==1) salvarModificacaoTarefa(tarefa, 'alta', strColuna);
-    else if(prioridade == 'media' && sentido==-1) salvarModificacaoTarefa(tarefa, 'baixa', strColuna);
+    if(novoEstado != 'bloqueado')
+        salvarModificacaoTarefa(tarefa, novoEstado);
+    else
+    {
+        //Requisitar motivo
+        let modalBloqueio = document.querySelector('#modal-bloqueio');
+        modalBloqueio.style.visibility = 'visible';
+
+    }
 }
 
 

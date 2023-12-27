@@ -191,15 +191,17 @@
                     tarefa.prioridade = prioridade;
                     linha.innerHTML += 
                     `
-                    <div class="atividade" draggable="true" onclick="ativarPopup('${tarefa.nome}')">
-                        <button class="move up" onclick="mover(+1, this)">↑</button>    
-                        <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
-                        <div class="conteudo">
-                            <p class="autor">${tarefa.autor}</p>
-                            <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
-                            
+                    <div class="container-atividade">
+                        <button class="move left" onclick="mover(-1, this)">←</button> 
+                        <div class="atividade" draggable="true" onclick="ativarPopup('${tarefa.nome}')">   
+                            <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
+                            <div class="conteudo">
+                                <p class="autor">${tarefa.autor}</p>
+                                <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
+                                
+                            </div>
                         </div>
-                        <button class="move down" onclick="mover(-1, this)">↓</button>
+                        <button class="move right" onclick="mover(+1, this)">→</button>
                     </div>
                     `;        
                 }

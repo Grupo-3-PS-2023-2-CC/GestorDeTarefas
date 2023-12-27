@@ -28,7 +28,7 @@ document.addEventListener('drop', function(event) {
 
     let arrastado = document.querySelector('.dragged');
     console.log(arrastado);
-    let colunaAtual = arrastado.parentElement.parentElement.parentElement.id;
+    let colunaAtual = arrastado.closest('.coluna').id; //arrastado.parentElement.parentElement.parentElement.id;
 
     //Se o espaço for uma coluna ou linha de prioridade
     if(event.target.classList.value.match(/(coluna|prioridade)/))

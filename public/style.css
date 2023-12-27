@@ -124,7 +124,7 @@ form {
     flex-direction: row;
     overflow-x: hidden;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
     gap: 1.5vw;
     width: 100%;
     height: auto;
@@ -209,6 +209,13 @@ form {
 .conteudo
 {
     padding: 1vh 1vw;
+}
+
+.container-atividade
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .atividade
@@ -536,8 +543,11 @@ nav button
     {
         visibility: visible;
         position:relative;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 30px;
     }
-    #finalizado .baixa .down, #afazer .alta .up
+    #bloqueado .left, #finalizado .right
     {
         visibility: hidden !important;
         position:fixed !important;
@@ -580,6 +590,11 @@ nav button
         text-align: center;
         font-weight: 500;
         background-color: rgba(255, 255, 255, 0.336);
+    }
+
+    #texto-motivo
+    {
+        width: auto;
     }
 
     /*Só usa*/
@@ -660,8 +675,7 @@ nav button
     .coluna
     {
         min-width: 100vw !important;
-        height: 95%;
-        margin-top: 0.5vh;
+        height: 100%;
     }
     .container-img
     {
@@ -678,7 +692,7 @@ nav button
     #quadro
     {
         display: flex;
-        align-items: center;
+        align-items: start;
         overflow-y: hidden;
     }
     
@@ -686,7 +700,6 @@ nav button
     {
         display: flex;
         overflow-x: auto;
-        justify-content: start;
         gap: 2vw;
         padding: 0.5vh 0.5vw;
     }
