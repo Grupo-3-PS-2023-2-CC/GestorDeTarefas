@@ -261,7 +261,7 @@ form {
     
     overflow-y: auto;
     height: auto;
-    min-height: 15vh;
+    min-height: 14vh;
     width: 20vw;
     font-size: 1rem;
     transition: box-shadow 250ms;
