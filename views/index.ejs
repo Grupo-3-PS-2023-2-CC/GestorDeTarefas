@@ -133,6 +133,7 @@
                     <img src="/LogoFocusNegativa3.png" alt="Logo Focus">
                 </div>
                 <h1><%=coluna%></h1>
+                <h1 style="visibility: hidden;" class="espacoh1"><%=coluna%></h1>
                 <div class="atividades">
                     <div class="prioridade alta"></div>
                     <div class="prioridade media"></div>
@@ -215,7 +216,7 @@
                             <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
                             <div class="conteudo">
                                 <p class="autor">${tarefa.autor}</p>
-                                <p class="data">${prazo.toLocaleDateString()} ${prazo.toTimeString().match(/\d\d:\d\d:\d\d/)}</p>
+                                <p class="data">${prazo.toLocaleDateString()}</p>
                                 
                             </div>
                         </div>
