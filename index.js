@@ -10,7 +10,7 @@ const connectToDb = require('./database/db');
 //express.static toma uma string de caminho como argumento e torna seu conteúdo disponível estaticamente (acessível por URL).
 //__dirname é o diretório atual.
 app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.set('view engine', 'ejs'); //atribuição do tipo de arquivo a ser buscado (.ejs)
 app.use(routes); //utiliza as rotas.
