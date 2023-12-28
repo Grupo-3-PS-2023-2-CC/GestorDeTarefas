@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/LogoFocus.png" type="image/png">
+    <link rel="stylesheet" href="/style.css">
+    <title>Kanban</title>
+</head>
+<body>
+    <div id="login" class="modal" style="visibility: hidden;">
+        <div id="janela-login" class="janela-modal">
+            <form id="form-selecionar">      
+                <label> Selecione Um Usuário <br>
+                    <select id="opcoes-usuario">
+                        <optgroup>
+                            <%usuarios.forEach((usuario)=>{%>
+                                <option><%=usuario.nome%></option>
+                            <%})%>
+                        </optgroup>  
+                    </select> <br>
+                    <input type="button" value="Entrar" onclick="entrarComSelecao()">
+                </label>
+                <br><br>
+                <div style="color: darkblue">ou</div>
+                <br><br>
+                <label id="label-registrar">
+                    Registre Um Novo Usuário <br>
+                    <input type="button" onclick="alterarFormulario()" value="Registrar">
+                </label>
+            </form>
+            <form action="/registrar" method="post" id="form-registrar" style="visibility: hidden;">
+                <label>
+                    Nome do Usuário <br>
+                    <input type="text" name="nome" placeholder="Seu nome aqui" id="registro-nome"> 
+                </label>
+                <br>
+                <input type="button" onclick="registrar(this)" value="Registrar">
+                <input type="submit" id="registro-post" style="visibility: hidden; position: fixed;">
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-bloqueio" class="modal" style="visibility: hidden;">
+        <div class="janela-modal">
+            <form id="form-bloqueio">
+                <label for="bloqueio"> Motivo de Bloqueio: <br>
+                    <textarea name="" id="texto-motivo" cols="30" rows="10"></textarea>
+                </label>
+                <br>
+                <input type="button" onclick="passarParaBloqueio()" value="Mover">
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-tarefa" class="modal" style="visibility:hidden;" onclick="desativarPopup()">
+    
+    </div>
+
+    <header>
+        <nav>
+            <img src="/LogoFocus4.png" alt="Logo Focus">
+            <input id="ativarBotaoAdicao" type="checkbox" style="visibility: hidden;"/>
+            <button type="menu" id="botaoAdicao" value="+" onclick="ativarMenu()">
+            <div id="traco1" class="traco"></div>
+            <div id="traco2" class="traco"></div>
+            <div id="traco3" class="traco"></div>
+            </button>
+
+            <div id="filtro">
+                <select id="filtro-opcao" onchange="disporOpcaoFiltro(this.value)">
+                    <optgroup>
+                        <option value="0">Filtrar por...</option>
+                        <option value="filtro-nome">Por Nome</option>
+                        <option value="filtro-data">Por Data</option>
+                        <option value="filtro-atribuicao">Por Atribuição</option>
+                        <option value="filtro-autor">Por Autor</option>
+                    </optgroup>
+                </select>
+                <div id="info-filtro" style="visibility: hidden; position: fixed;">
+                    <label id="label-filtro"></label> &nbsp;
+                    <input type="text" id="detalhes-filtro" onchange="filtrar(this.value)">
+                </div>
+                
+                <a href="" id="filtrar" style="visibility: hidden; position: fixed;"></a>
+            </div>
+
+            <button type="button" id="botaoLogoff" onclick="logoff()">«</button>
+        </nav>
+            <!-- FORMULÁRIO ------------------------------------------------------------------------>
+            <section id="adicionarAtividade" style="visibility: hidden;">
+                <h1>Adicionar Atividade</h1>
+                <form action="/criar" method="post">
+                    <label for="nome">Tarefa:</label>
+                    <input id="nome" name="nome" type="text">
+            
+                    <label for="descricao">Descrição:</label>
+                    <input id="descricao" name="descricao" type="text">
+
+                    <label for="atribuicao">Atribuir a:</label>
+                    <select name="atribuicao" id="atribuicao">
+                        <optgroup>
+                            <%usuarios.forEach((usuario)=>{%>
+                                <option><%=usuario.nome%></option>
+                            <%})%>
+                        </optgroup>
+                    </select>
+            
+                    <input id="autor" name="autor" type="text" style="visibility: hidden; position: fixed;">
+                    
+                    <label for="prazo">Prazo:</label>
+                    <input id="prazo" name="prazo" type="date">
+                    <button type="submit">Adicionar Tarefa</button>
+                </form>
+            </section>
+
+            <form action='/modificar' method="post" style="visibility: hidden; position: fixed;" id="modificar">
+                <input id="nome" name="nome" type="text">
+                <input id="estado" type="text" name="estado" value=""/>
+                <input type="text" id="bloqueio" name="bloqueio"/>
+                <button type="submit">Modificar Tarefa</button>
+            </form>
+    </header>
+
+    <!-- QUADRO ---------------------------------------------------------------------------->
+    <main id="quadro">
+
+        <% let colunas = ['Bloqueado', 'A Fazer', 'Fazendo', 'Finalizado']%>
+        <% let idsColunas = ['bloqueado', 'afazer', 'fazendo', 'finalizado']%>
+        <%colunas.forEach((coluna, i)=>{%>
+            <section class="coluna" id=<%=idsColunas[i]%>>
+                <div class="container-img">
+                    <img src="/LogoFocusNegativa3.png" alt="Logo Focus">
+                </div>
+                <h1><%=coluna%></h1>
+                <h1 style="visibility: hidden;" class="espacoh1"><%=coluna%></h1>
+                <div class="atividades">
+                    <div class="prioridade alta"></div>
+                    <div class="prioridade media"></div>
+                    <div class="prioridade baixa"></div>
+                </div>
+                
+            </section>
+        <%})%>
+
+    </main>
+
+    <!-- CARREGANDO DADOS ----------------------------------------------------------------->
+    <script src="/script.js"></script>
+    <script src="/dragAndDrop.js"></script>
+    <script>
+        
+        let tarefas = `<%-JSON.stringify(tarefas)%>`//resgatando tarefas renderizadas.
+        tarefas = JSON.parse(tarefas);
+
+        tarefas.forEach(
+            (tarefa)=>
+            {
+                //console.log(`Lendo tarefa `, tarefa);
+                if(!tarefa.estado) console.log(`<e> Tarefa não registada: `, tarefa);
+                let estadoFormatado = tarefa.estado ? tarefa.estado.match(/\w+/gi).join('').toLowerCase() : '';
+
+                //Analisando se a tarefa puxada do BD está adequada para ser carregada.
+                if(['bloqueado', 'afazer', 'fazendo', 'finalizado'].includes(estadoFormatado)){
+                    let coluna = document.querySelector(`#${estadoFormatado}`);
+                    const diaEmMiliseg = 24 * 60 * 60 * 1000;
+                    let tempoRestante = (new Date(tarefa.prazo) - Date.now()) / diaEmMiliseg ; // em dias
+                    let prioridade, cor;
+                    //Alta
+                    if(tempoRestante <= 3)
+                    {
+                        cor = '#E53324';
+                        prioridade = 'alta';
+                    }
+                    //Media     
+                    else if(tempoRestante <= 5)
+                    {
+                        cor = '#FBE23E';
+                        prioridade = 'media';
+                    }
+                    //Baixa
+                    else
+                    {
+                        cor = '#2F993D';
+                        prioridade = 'baixa';
+                    }
+                    
+
+                    let linha = coluna.querySelector(`.${prioridade}`);
+                    prazo = new Date(tarefa.prazo);
+                    let motivoBloqueio = '';
+                    if(tarefa.bloqueio) motivoBloqueio = 
+                    `
+                    <div class="data-container">
+                        <img src="/LogoFocusNegativa.webp" alt="Logo Focus" draggable="false">
+                        <div style="text-align: center">
+                            <p class="data-rotulo">Motivo de Bloqueio:</p>
+                            <p class="data">${tarefa.bloqueio}</p>
+                        </div>
+                    </div>
+                    `;
+                    else motivoBloqueio =
+                    `
+                    <img src="/LogoFocus4.png" alt="Logo Focus" draggable="false">
+                    `
+
+                    const prazoStr = `${prazo.getFullYear()}-${(prazo.getMonth() + 1).toString().length == 2 ? prazo.getMonth()+1 : `0${prazo.getMonth()+1}`}-${prazo.getDate()}`;
+                    tarefa.motivoBloqueio = motivoBloqueio;
+                    tarefa.prazoStr = prazoStr;
+                    tarefa.prioridade = prioridade;
+                    linha.innerHTML += 
+                    `
+                    <div class="container-atividade">
+                        <button class="move left" onclick="mover(-1, this)">←</button> 
+                        <div class="atividade" draggable="true" onclick="ativarPopup('${tarefa.nome}')">   
+                            <div class="tituloAtividade" style="background-color: ${cor};">${tarefa.nome}</div>
+                            <div class="conteudo">
+                                <p class="autor">${tarefa.autor}</p>
+                                <p class="data">${prazo.toLocaleDateString()}</p>
+                                
+                            </div>
+                        </div>
+                        <button class="move right" onclick="mover(+1, this)">→</button>
+                    </div>
+                    `;        
+                }
+            }
+        );
+    </script>
+</body>
+</html>
