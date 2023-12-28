@@ -162,3 +162,49 @@ function atualizarData(entrada)
 {
     entrada.parentElement.querySelector('#atualizar-data').click();
 }
+
+
+let filtroAplicado = '';
+function disporOpcaoFiltro(filtro){
+    let detalhesFiltro = document.querySelector('#detalhes-filtro');
+    let labelFiltro = document.querySelector('#label-filtro');
+    let infoFiltro = document.querySelector('#info-filtro');
+    filtroAplicado = filtro;
+    if(filtro == '0')
+    {
+        infoFiltro.style.visibility = 'hidden';
+        infoFiltro.style.position = 'fixed';
+    }
+    else 
+    {
+        infoFiltro.style.visibility = 'visible';
+        infoFiltro.style.position = 'relative';
+    }
+
+    switch(filtro)
+    {
+        case 'filtro-data':
+            detalhesFiltro.type = 'date';
+            labelFiltro.textContent = 'Prazo <';
+            break;
+        case 'filtro-nome':
+            detalhesFiltro.type = 'text';
+            labelFiltro.textContent = 'Nomeado:';
+            break;
+        case 'filtro-atribuicao':
+            detalhesFiltro.type = 'text';
+            labelFiltro.textContent = 'Atribuído a:';
+            break;
+        case 'filtro-autor':
+            detalhesFiltro.type = 'text';
+            labelFiltro.textContent = 'Adicionado por:';
+            break;
+    }
+}
+
+function filtrar(valor)
+{
+    let url = document.querySelector('#filtrar');
+    url.href = `/${filtroAplicado}/${valor}`;
+    url.click();
+}

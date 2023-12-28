@@ -59,13 +59,31 @@
 
     <header>
         <nav>
-            <img src="LogoFocus4.png" alt="Logo Focus">
+            <img src="/LogoFocus4.png" alt="Logo Focus">
             <input id="ativarBotaoAdicao" type="checkbox" style="visibility: hidden;"/>
             <button type="menu" id="botaoAdicao" value="+" onclick="ativarMenu()">
             <div id="traco1" class="traco"></div>
             <div id="traco2" class="traco"></div>
             <div id="traco3" class="traco"></div>
             </button>
+
+            <div id="filtro">
+                <select id="filtro-opcao" onchange="disporOpcaoFiltro(this.value)">
+                    <optgroup>
+                        <option value="0">Filtrar por...</option>
+                        <option value="filtro-nome">Por Nome</option>
+                        <option value="filtro-data">Por Data</option>
+                        <option value="filtro-atribuicao">Por Atribuição</option>
+                        <option value="filtro-autor">Por Autor</option>
+                    </optgroup>
+                </select>
+                <div id="info-filtro" style="visibility: hidden; position: fixed;">
+                    <label id="label-filtro"></label> &nbsp;
+                    <input type="text" id="detalhes-filtro" onchange="filtrar(this.value)">
+                </div>
+                
+                <a href="" id="filtrar" style="visibility: hidden; position: fixed;"></a>
+            </div>
 
             <button type="button" id="botaoLogoff" onclick="logoff()">«</button>
         </nav>
@@ -112,7 +130,7 @@
         <%colunas.forEach((coluna, i)=>{%>
             <section class="coluna" id=<%=idsColunas[i]%>>
                 <div class="container-img">
-                    <img src="LogoFocusNegativa3.png" alt="Logo Focus">
+                    <img src="/LogoFocusNegativa3.png" alt="Logo Focus">
                 </div>
                 <h1><%=coluna%></h1>
                 <div class="atividades">
@@ -173,7 +191,7 @@
                     if(tarefa.bloqueio) motivoBloqueio = 
                     `
                     <div class="data-container">
-                        <img src="LogoFocusNegativa.webp" alt="Logo Focus" draggable="false">
+                        <img src="/LogoFocusNegativa.webp" alt="Logo Focus" draggable="false">
                         <div style="text-align: center">
                             <p class="data-rotulo">Motivo de Bloqueio:</p>
                             <p class="data">${tarefa.bloqueio}</p>
@@ -182,7 +200,7 @@
                     `;
                     else motivoBloqueio =
                     `
-                    <img src="LogoFocus4.png" alt="Logo Focus" draggable="false">
+                    <img src="/LogoFocus4.png" alt="Logo Focus" draggable="false">
                     `
 
                     const prazoStr = `${prazo.getFullYear()}-${(prazo.getMonth() + 1).toString().length == 2 ? prazo.getMonth()+1 : `0${prazo.getMonth()+1}`}-${prazo.getDate()}`;

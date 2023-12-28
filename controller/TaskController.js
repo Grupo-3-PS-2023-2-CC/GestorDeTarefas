@@ -28,9 +28,40 @@ const getAll = async (req, res) =>
         return res.status(500).send({error: error.message});
     }
 }
+const diaEmMiliseg = 24 * 60 * 60 * 1000;
+const getFiltrado = async(req,res)=>
+{
+    let {filtro, valor} = req.params;
+    try
+    {
+       let tarefas;
+       switch(filtro)
+       {
+            case 'filtro-nome': //Por Nome
+                tarefas = await tarefa.find({nome:{$eq: valor} });
+                break;
+            case 'filtro-data': //Por Data
+                tarefas = await tarefa.find({prazo: {$lt: new Date(valor).getTime() + diaEmMiliseg}});
+                break;
+            case 'filtro-atribuicao': //Por Atribuição
+                tarefas = await tarefa.find({atribuicao: {$eq: valor}});
+                break;
+            case 'filtro-autor': //Por Ator
+                tarefas = await tarefa.find({autor: {$eq: valor}})
+       }
+       const usuarios = await usuario.find();
+
+       res.render("index", {tarefas, usuarios});
+    }
+    catch(error)
+    {
+        console.log(`<e> Erro durante carregamento de página principal: ${error}`);
+        return res.status(500).send({error: error.message});
+    }
+}
 
 //Criação de Tarefa (POST)s
-const diaEmMiliseg = 24 * 60 * 60 * 1000;
+
 const adicionarTarefa = async (req, res)=>
 {
     const body = req.body;
@@ -71,7 +102,7 @@ const modificar = async (req, res) =>
         //Modificando tarefa
         if(estados.includes(body.estado))
             await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {estado: body.estado, ultimaModificacao: Date.now(), bloqueio: body.bloqueio}});
-        res.redirect('/');
+        res.redirect(req.get('referer'));
     }
     catch(error)
     {
@@ -87,11 +118,12 @@ const atualizarData = async(req, res)=>
     {
         if(body.nome && body.data)
             await tarefa.updateOne({nome: {$eq: body.nome}}, {$set: {prazo: new Date(body.data).getTime() + diaEmMiliseg}});
-        res.status(200).redirect('/');
+        res.status(200).redirect(req.get('referer'));
     }
     catch(error)
     {
-
+        console.log(`<e> ${error}`);
+        res.status('500').send({error: error.message});
     }
 }
 
@@ -101,5 +133,6 @@ module.exports =
     getAll,
     adicionarTarefa,
     modificar,
-    atualizarData
+    atualizarData,
+    getFiltrado
 }

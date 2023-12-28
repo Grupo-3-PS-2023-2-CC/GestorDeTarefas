@@ -40,6 +40,32 @@ main
     width: 100%;
 }
 
+#filtro-opcao
+{
+    border-radius: 20px;
+    padding-left: 0.5vw;
+    border: none;
+
+}
+#label-filtro
+{
+    font-size: 0.75rem;
+}
+#info-filtro
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#filtro
+{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    position: absolute;
+    right: 5vw;
+}
+
 ::-webkit-scrollbar
 {
     background-color: #5f453bb7;
